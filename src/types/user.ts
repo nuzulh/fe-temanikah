@@ -5,5 +5,6 @@ export declare type User = {
   name?: string;
   accessToken?: string;
   isLoggedIn: boolean;
+  isVerified: boolean;
   roles: UserRole;
 };
