@@ -2,11 +2,8 @@ import { LogService } from "./log.service";
 
 export function createLogService(): LogService {
   return {
-    info(message) {
-      console.log(message);
-    },
     debug(message) {
-      console.debug(message);
+      console.log(`[DEBUG] ${message}`);
     },
     table(data) {
       console.table(data);

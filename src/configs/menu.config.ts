@@ -1,20 +1,39 @@
 import { AvailableMenus, Menu, Menus } from "../types";
 
+const appPath: string = "/app";
+
 const menus: Menus = {
+  // Unsecured
+  HOME: {
+    name: "Home",
+    path: "/",
+    roles: ["GUEST", "USER"],
+  },
+  SIGNIN: {
+    name: "Sign In",
+    path: "/signin",
+    roles: ["GUEST"],
+  },
+  SIGNUP: {
+    name: "Sign Up",
+    path: "/signup",
+    roles: ["GUEST"],
+  },
+  // Secured
   DASHBOARD: {
     name: "Dashboard",
-    path: "/dashboard",
-    roles: ["CUSTOMER"],
+    path: `${appPath}/dashboard`,
+    roles: ["USER"],
   },
   PROFILE: {
     name: "Profile",
-    path: "/profile",
-    roles: ["CUSTOMER"],
+    path: `${appPath}/profile`,
+    roles: ["USER"],
   },
   HISTORY: {
     name: "History",
-    path: "/history",
-    roles: ["CUSTOMER"],
+    path: `${appPath}/history`,
+    roles: ["USER"],
   },
 };
 

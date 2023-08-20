@@ -7,11 +7,14 @@ export function getDefaultState(): RootState {
       colorMode: "LIGHT",
       language: "ID",
       isLoading: false,
+      isError: false,
+      apiError: null,
+      errorMessage: null,
     },
     authState: {
       user: null,
-      isError: false,
-      error: null,
+      // isError: false,
+      // error: null,
     },
   };
 }

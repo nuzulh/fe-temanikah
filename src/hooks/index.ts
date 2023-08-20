@@ -1,1 +1,1 @@
-export * from "./app-state-selector";
+export * from "./root-selector";

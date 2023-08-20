@@ -16,30 +16,15 @@ export function authStateReducer(
         ...state,
         ...action.payload,
       };
+    case AUTH_ACTIONS.MUTATION.UPDATE_AUTH_STATE:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case AUTH_ACTIONS.SIGN_OUT:
-      return {
-        ...state
-      };
-    case AUTH_ACTIONS.RESULT.SIGN_IN_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case AUTH_ACTIONS.RESULT.SIGN_IN_ERROR:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case AUTH_ACTIONS.RESULT.SIGN_UP_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case AUTH_ACTIONS.RESULT.SIGN_UP_ERROR:
-      return {
-        ...state,
-        ...action.payload,
-      };
+      return getDefaultState().authState;
+    case AUTH_ACTIONS.MUTATION.RESET_AUTH_STATE:
+      return getDefaultState().authState;
     default:
       return { ...state };
   }

@@ -5,25 +5,23 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { legacy_createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
-import { rootReducer, createRootSaga } from "./redux";
+import { rootReducer, createRootSagas } from "./redux";
 import { Services, createServices } from "./services";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = legacy_createStore(rootReducer, applyMiddleware(sagaMiddleware));
-
 const services = createServices(
   cb => cb(store.getState())
 );
-
-const startSagas = createRootSaga(
+const startSagas = createRootSagas(
   services.logService,
+  services.authService,
 );
 sagaMiddleware.run(startSagas);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-
 root.render(
   <React.StrictMode>
     <Provider store={store}>

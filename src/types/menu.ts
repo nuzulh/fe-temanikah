@@ -1,7 +1,13 @@
 import { UserRole } from "./user";
 
 export declare type AvailableMenus =
-  "DASHBOARD" | "PROFILE" | "HISTORY";
+  "HOME" |
+  "SIGNIN" |
+  "SIGNUP" |
+  "DASHBOARD" |
+  "PROFILE" |
+  "HISTORY" |
+  "UNKNOWN";
 
 export declare type Menu = {
   name: string;

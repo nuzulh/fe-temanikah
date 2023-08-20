@@ -1,10 +1,11 @@
-export declare type UserRole = "GUEST" | "CUSTOMER";
+export declare type UserRole = "GUEST" | "USER" | "ADMIN";
 
 export declare type User = {
-  email?: string;
+  id?: string;
   name?: string;
-  accessToken?: string;
+  email?: string;
+  role?: UserRole;
+  token?: string | null;
+  isVerified?: boolean;
   isLoggedIn: boolean;
-  isVerified: boolean;
-  roles: UserRole;
 };

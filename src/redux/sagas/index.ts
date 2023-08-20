@@ -1,19 +1,19 @@
-import { all, takeEvery } from "redux-saga/effects";
-import { LogService } from "../../services";
-import { APP_ACTIONS } from "../../helpers";
+import { all } from "redux-saga/effects";
+import { AuthService, LogService } from "../../services";
+import { bootInitSaga } from "./boot-init";
+import { startAuthSagas } from "./auth";
+import { startAppSagas } from "./app";
 
-export function createRootSaga(
-  logService: LogService
+export function createRootSagas(
+  logService: LogService,
+  authService: AuthService,
 ) {
-  logService.debug("start all saga");
+  logService.debug("start temanikah web app sagas");
   return function* () {
     yield all([
-      takeEvery(
-        APP_ACTIONS.SHOW_LOADING,
-        function* () {
-          yield logService.debug("ini adalah saga show loading...");
-        }
-      )
+      bootInitSaga(logService),
+      startAppSagas(logService),
+      startAuthSagas(logService, authService),
     ]);
   };
 }

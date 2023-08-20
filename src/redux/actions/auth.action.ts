@@ -1,5 +1,5 @@
 import { AUTH_ACTIONS } from "../../helpers";
-import { User } from "../../types";
+import { DispatchAction, User, UserRole } from "../../types";
 
 export function signInAction(
   email: string,
@@ -11,49 +11,38 @@ export function signInAction(
   };
 }
 
-export function signInSuccessAction(user: User) {
+export function signInSuccessAction(
+  user: Partial<User>
+): DispatchAction<Partial<User>> {
   return {
-    type: AUTH_ACTIONS.RESULT.SIGN_IN_SUCCESS,
+    type: AUTH_ACTIONS.MUTATION.UPDATE_AUTH_STATE,
     payload: {
       ...user,
+      role: user.role?.toUpperCase() as UserRole,
       isLoggedIn: true,
     },
   };
 }
 
-export function signInErrorAction(error: Error) {
-  return {
-    type: AUTH_ACTIONS.RESULT.SIGN_IN_ERROR,
-    payload: { error }
-  };
-}
-
 export function signUpAction(
-  name: string,
   email: string,
   password: string,
 ) {
   return {
     type: AUTH_ACTIONS.SIGN_UP,
+    payload: { email, password },
+  };
+}
+
+export function signUpSuccessAction(
+  user: Partial<User>
+): DispatchAction<Partial<User>> {
+  return {
+    type: AUTH_ACTIONS.MUTATION.UPDATE_AUTH_STATE,
     payload: {
-      name,
-      email,
-      password,
+      ...user,
+      role: user.role?.toUpperCase() as UserRole,
     },
-  };
-}
-
-export function signUpSuccessAction(user: User) {
-  return {
-    type: AUTH_ACTIONS.RESULT.SIGN_UP_SUCCESS,
-    payload: { user },
-  };
-}
-
-export function signUpErrorAction(error: Error) {
-  return {
-    type: AUTH_ACTIONS.RESULT.SIGN_UP_ERROR,
-    payload: { error }
   };
 }
 

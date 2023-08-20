@@ -6,7 +6,17 @@ export function appStateReducer(
   action: DispatchAction<AppState>
 ): AppState {
   switch (action.type) {
+    case APP_ACTIONS.NAVIGATE_TO:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case APP_ACTIONS.MUTATION.UPDATE_APP_STATE:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case APP_ACTIONS.SHOW_POPUP:
       return {
         ...state,
         ...action.payload,
