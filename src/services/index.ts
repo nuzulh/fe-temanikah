@@ -7,7 +7,7 @@ import { createAuthService } from "./auth";
 export const Services = createContext<ServicesContext>({} as ServicesContext);
 
 export function createServices(
-  select: SelectStateFn,
+  select: SelectStateFn
 ): ServicesContext {
   const logService = createLogService();
   const authService = createAuthService(select);

@@ -6,9 +6,9 @@ import { startAppSagas } from "./app";
 
 export function createRootSagas(
   logService: LogService,
-  authService: AuthService,
+  authService: AuthService
 ) {
-  logService.debug("start temanikah web app sagas");
+  logService.debug("start TemanikahApp sagas");
   return function* () {
     yield all([
       bootInitSaga(logService),

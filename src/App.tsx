@@ -4,7 +4,8 @@ import { useEffect } from "react";
 import { startBootinit } from "./redux";
 import { Loading } from "./components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home } from "./pages";
+import { HomePage, SignInPage, SignUpPage } from "./pages";
+import { menuConfig } from "./configs";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -18,7 +19,9 @@ export default function App() {
     isLoading ? <Loading /> : (
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path={menuConfig.get("SIGNIN").path} element={<SignInPage />} />
+          <Route path={menuConfig.get("SIGNUP").path} element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     )

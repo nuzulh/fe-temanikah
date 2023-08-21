@@ -1,5 +1,5 @@
 import { AUTH_ACTIONS } from "../../helpers";
-import { DispatchAction, User, UserRole } from "../../types";
+import { AuthState, DispatchAction, User, UserRole } from "../../types";
 
 export function signInAction(
   email: string,
@@ -13,13 +13,15 @@ export function signInAction(
 
 export function signInSuccessAction(
   user: Partial<User>
-): DispatchAction<Partial<User>> {
+): DispatchAction<Partial<AuthState>> {
   return {
     type: AUTH_ACTIONS.MUTATION.UPDATE_AUTH_STATE,
     payload: {
-      ...user,
-      role: user.role?.toUpperCase() as UserRole,
-      isLoggedIn: true,
+      user: {
+        ...user,
+        role: user.role?.toUpperCase() as UserRole,
+        isLoggedIn: true,
+      },
     },
   };
 }
@@ -36,12 +38,14 @@ export function signUpAction(
 
 export function signUpSuccessAction(
   user: Partial<User>
-): DispatchAction<Partial<User>> {
+): DispatchAction<Partial<AuthState>> {
   return {
     type: AUTH_ACTIONS.MUTATION.UPDATE_AUTH_STATE,
     payload: {
-      ...user,
-      role: user.role?.toUpperCase() as UserRole,
+      user: {
+        ...user,
+        role: user.role?.toUpperCase() as UserRole,
+      },
     },
   };
 }

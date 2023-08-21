@@ -1,12 +1,17 @@
-import { takeLatest } from "redux-saga/effects";
+import { select, takeLatest } from "redux-saga/effects";
 import { LogService } from "../../../services";
 import { APP_ACTIONS } from "../../../helpers";
+import { AppState, RootState } from "../../../types";
 
 function createWatchAppState(logService: LogService) {
   return function* () {
     logService.debug("app state has been updated");
 
-    yield null;
+    const appState: AppState = yield select(
+      (state: RootState) => state.appState
+    );
+
+    logService.json(appState);
   };
 }
 

@@ -1,4 +1,8 @@
+import { NavigateFunction } from "react-router-dom";
+import { AvailableMenus } from "./menu";
+
 export declare type PageRoute = {
-  name: string;
+  navigate: NavigateFunction;
+  name: AvailableMenus;
   params?: any;
 };

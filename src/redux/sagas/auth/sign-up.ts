@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeLeading } from "redux-saga/effects";
 import { AuthService, LogService } from "../../../services";
 import { AUTH_ACTIONS } from "../../../helpers";
 import {
@@ -13,7 +13,7 @@ function createSignUp(
   logService: LogService,
   authService: AuthService,
 ) {
-  return function* (actions: DispatchAction<{
+  return function* (action: DispatchAction<{
     email: string;
     password: string;
   }>) {
@@ -23,8 +23,8 @@ function createSignUp(
     try {
       const result: ApiResponse<Partial<User>> = yield call(
         authService.postSignUp,
-        actions.payload.email,
-        actions.payload.password
+        action.payload.email,
+        action.payload.password
       );
 
       if (result.error) {
@@ -37,7 +37,6 @@ function createSignUp(
       }
 
       // TODO: Handle signup success
-      logService.json(result.data!);
       yield put(signUpSuccessAction(result.data!));
 
     } catch (error) {
@@ -54,7 +53,7 @@ export function* startSignUpSaga(
   authService: AuthService,
 ) {
   logService.debug("start sign up saga");
-  yield takeEvery(
+  yield takeLeading(
     AUTH_ACTIONS.SIGN_UP,
     createSignUp(logService, authService)
   );

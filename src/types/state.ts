@@ -5,13 +5,13 @@ export declare type AppState = {
   colorMode: "LIGHT" | "DARK";
   language: "ID" | "EN";
   isLoading: boolean;
-  isError: boolean;
-  errorMessage: string | null;
-  apiError: ApiError | null;
+  // isError: boolean;
+  // errorMessage: string | null;
+  // apiError: ApiError | null;
 };
 
 export declare type AuthState = {
-  user: User | null;
+  user: User | Partial<User> | null;
   // isError: boolean;
   // error: Error | null;
 };

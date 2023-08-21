@@ -7,7 +7,8 @@ export declare type AvailableMenus =
   "DASHBOARD" |
   "PROFILE" |
   "HISTORY" |
-  "UNKNOWN";
+  "UNKNOWN" |
+  "BACK";
 
 export declare type Menu = {
   name: string;

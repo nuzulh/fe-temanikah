@@ -1,5 +1,5 @@
 import { APP_ACTIONS } from "../../helpers";
-import { ApiError, AppState, DispatchAction, PageRoute, Popup, PopupType } from "../../types";
+import { AppState, DispatchAction, PageRoute, Popup, PopupType } from "../../types";
 
 export function startBootinit() {
   return {

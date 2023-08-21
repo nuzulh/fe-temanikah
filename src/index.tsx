@@ -11,11 +11,12 @@ import { Services, createServices } from "./services";
 const sagaMiddleware = createSagaMiddleware();
 const store = legacy_createStore(rootReducer, applyMiddleware(sagaMiddleware));
 const services = createServices(
-  cb => cb(store.getState())
+  cb => cb(store.getState()),
+
 );
 const startSagas = createRootSagas(
   services.logService,
-  services.authService,
+  services.authService
 );
 sagaMiddleware.run(startSagas);
 
