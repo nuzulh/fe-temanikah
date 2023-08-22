@@ -4,9 +4,9 @@ export function getDefaultState(): RootState {
   return {
     appState: {
       selectedMenu: "HOME",
-      colorMode: "LIGHT",
+      darkMode: false,
       language: "ID",
-      isLoading: false,
+      isLoading: true,
     },
     authState: {
       user: null,

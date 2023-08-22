@@ -2,7 +2,7 @@ import { ApiError, AvailableMenus, User } from "./";
 
 export declare type AppState = {
   selectedMenu: AvailableMenus;
-  colorMode: "LIGHT" | "DARK";
+  darkMode: boolean;
   language: "ID" | "EN";
   isLoading: boolean;
   // isError: boolean;

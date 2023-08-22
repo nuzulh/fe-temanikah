@@ -2,12 +2,14 @@ import { takeLeading } from "redux-saga/effects";
 import { LogService } from "../../../services";
 import { DispatchAction, Popup } from "../../../types";
 import { APP_ACTIONS } from "../../../helpers";
+import toast from "react-hot-toast";
 
 function createShowPopup(logService: LogService) {
   return function* (action: DispatchAction<Popup>) {
-    logService.json(action.payload);
+    logService.debug("showing popup alert message");
 
-    yield null;
+    const { message, duration } = action.payload;
+    yield toast(message, { duration });
   };
 }
 

@@ -37,6 +37,7 @@ const menus: Menus = {
   },
 };
 
+// eslint-disable-next-line
 export default {
   get(key: AvailableMenus): Menu {
     return menus[key];

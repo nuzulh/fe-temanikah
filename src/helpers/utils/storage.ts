@@ -5,7 +5,7 @@ declare type AvailableKeys = keyof AppState | keyof User;
 
 // eslint-disable-next-line
 export default {
-  get(): Partial<AppState | User> | null {
+  get<T>(): T | null {
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) return null;
     return JSON.parse(data);

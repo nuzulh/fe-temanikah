@@ -1,15 +1,20 @@
 import { select, takeLatest } from "redux-saga/effects";
 import { LogService } from "../../../services";
-import { APP_ACTIONS } from "../../../helpers";
+import { APP_ACTIONS, appStorage } from "../../../helpers";
 import { AppState, RootState } from "../../../types";
 
 function createWatchAppState(logService: LogService) {
   return function* () {
-    logService.debug("app state has been updated");
+    logService.debug("--- app state has been updated");
 
     const appState: AppState = yield select(
       (state: RootState) => state.appState
     );
+
+    appStorage.set({
+      language: appState.language,
+      darkMode: appState.darkMode,
+    });
 
     logService.json(appState);
   };

@@ -55,3 +55,12 @@ export function signOutAction() {
     type: AUTH_ACTIONS.SIGN_OUT,
   };
 }
+
+export function updateAuthStateAction(
+  user: Partial<User>
+): DispatchAction<Partial<AuthState>> {
+  return {
+    type: AUTH_ACTIONS.MUTATION.UPDATE_AUTH_STATE,
+    payload: { user },
+  };
+}

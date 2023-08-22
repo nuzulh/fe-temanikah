@@ -55,6 +55,15 @@ export function showPopupAction(
   };
 }
 
+export function switchDarkModeAction(
+  darkMode: boolean
+): DispatchAction<Partial<AppState>> {
+  return {
+    type: APP_ACTIONS.MUTATION.UPDATE_APP_STATE,
+    payload: { darkMode }
+  };
+}
+
 export function updateAppStateAction(
   appState: Partial<AppState>
 ): DispatchAction<Partial<AppState>> {

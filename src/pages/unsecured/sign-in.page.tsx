@@ -1,29 +1,50 @@
 import { useForm } from "react-hook-form";
-import { BackButton, ScreenContainer } from "../../components";
+import { Button, Form, ScreenContainer } from "../../components";
 import { useDispatch } from "react-redux";
 import { signInAction } from "../../redux";
 
 export function SignInPage() {
   const dispath = useDispatch();
   const {
-    register,
+    control,
     handleSubmit,
-    // formState: { errors },
   } = useForm();
 
   return (
     <ScreenContainer>
-      <BackButton />
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit(
-        (data) => dispath(
-          signInAction(data.email, data.password)
-        )
+      <Form.Field onSubmit={handleSubmit(
+        (data) => dispath(signInAction(
+          data.email,
+          data.password
+        ))
       )}>
-        <input {...register("email")} placeholder="test@mail.com" />
-        <input {...register("password")} placeholder="********" />
-        <input type="submit" />
-      </form>
+        <strong className="pb-4 text-center">Silahkan masuk</strong>
+        <Form.Label text="Email" />
+        <Form.TextInput
+          control={control}
+          type="email"
+          name="email"
+          placeholder="akun@gmail.com"
+          rules={{
+            required: "Email harus diisi",
+          }}
+        />
+        <Form.Label text="Password" />
+        <Form.TextInput
+          control={control}
+          type="password"
+          name="password"
+          placeholder="********"
+          rules={{
+            required: "Password harus diisi"
+          }}
+        />
+        <Button
+          onClick={() => {}}
+        >
+          Masuk
+        </Button>
+      </Form.Field>
     </ScreenContainer>
   );
 }

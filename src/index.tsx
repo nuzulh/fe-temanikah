@@ -7,12 +7,12 @@ import { legacy_createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { rootReducer, createRootSagas } from "./redux";
 import { Services, createServices } from "./services";
+import { Toaster } from "react-hot-toast";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = legacy_createStore(rootReducer, applyMiddleware(sagaMiddleware));
 const services = createServices(
-  cb => cb(store.getState()),
-
+  cb => cb(store.getState())
 );
 const startSagas = createRootSagas(
   services.logService,
@@ -28,6 +28,7 @@ root.render(
     <Provider store={store}>
       <Services.Provider value={services}>
         <App />
+        <Toaster />
       </Services.Provider>
     </Provider>
   </React.StrictMode>
