@@ -2,28 +2,54 @@ import { useDispatch } from "react-redux";
 import { useRootState } from "./hooks";
 import { useEffect } from "react";
 import { startBootinit } from "./redux";
-import { Loading } from "./components";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomePage, SignInPage, SignUpPage } from "./pages";
-import { menuConfig } from "./configs";
+import { Loading, ScreenContainer, Text } from "./components";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import {
+  ContactPage,
+  Dashboard,
+  HomePage,
+  PackagesPage,
+  SignInPage,
+  SignUpPage,
+  ThemesPage,
+} from "./pages";
+import { HomeNavbar } from "./components/navbar/home-navbar.component";
+import { AppNavbar } from "./components/navbar/app-navbar.component";
 
 export default function App() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isLoading = useRootState((state) => state.appState.isLoading);
 
   useEffect(() => {
-    dispatch(startBootinit());
-  }, [dispatch]);
+    dispatch(
+      startBootinit(navigate)
+    );
+  }, [dispatch, navigate]);
 
   return (
     isLoading ? <Loading /> : (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path={menuConfig.get("SIGNIN").path} element={<SignInPage />} />
-          <Route path={menuConfig.get("SIGNUP").path} element={<SignUpPage />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomeNavbar />}>
+          <Route path="" element={<HomePage />} />
+          <Route path="/themes" element={<ThemesPage />} />
+          <Route path="/packages" element={<PackagesPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+        </Route>
+        <Route path="/app" element={<AppNavbar />}>
+          <Route path="" element={<Dashboard />} />
+        </Route>
+        <Route
+          path="*"
+          element={
+            <ScreenContainer>
+              <Text>Halaman tidak ditemukan</Text>
+            </ScreenContainer>
+          }
+        />
+      </Routes>
     )
   );
 }

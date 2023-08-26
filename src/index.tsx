@@ -8,6 +8,7 @@ import createSagaMiddleware from "redux-saga";
 import { rootReducer, createRootSagas } from "./redux";
 import { Services, createServices } from "./services";
 import { Toaster } from "react-hot-toast";
+import { BrowserRouter } from "react-router-dom";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = legacy_createStore(rootReducer, applyMiddleware(sagaMiddleware));
@@ -27,7 +28,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Services.Provider value={services}>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
         <Toaster />
       </Services.Provider>
     </Provider>

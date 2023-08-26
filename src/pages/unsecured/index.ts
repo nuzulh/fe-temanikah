@@ -1,3 +1,5 @@
 export * from "./home.page";
-export * from "./sign-in.page";
-export * from "./sign-up.page";
+export * from "./themes.page";
+export * from "./packages.page";
+export * from "./contact.page";
+export * from "./auth";

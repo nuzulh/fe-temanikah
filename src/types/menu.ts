@@ -2,6 +2,9 @@ import { UserRole } from "./user";
 
 export declare type AvailableMenus =
   "HOME" |
+  "THEMES" |
+  "PACKAGES" |
+  "CONTACT" |
   "SIGNIN" |
   "SIGNUP" |
   "DASHBOARD" |

@@ -1,9 +1,9 @@
 import { ScreenContainer, Text } from "../../components";
 
-export function HomePage() {
+export function ContactPage() {
   return (
     <ScreenContainer>
-      <Text>Home Page</Text>
+      <Text>Kontak</Text>
     </ScreenContainer>
   );
 }

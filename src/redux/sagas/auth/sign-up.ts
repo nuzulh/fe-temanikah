@@ -8,6 +8,8 @@ import {
   signUpSuccessAction,
 } from "../../actions";
 import { ApiResponse, DispatchAction, User } from "../../../types";
+import { NavigateFunction } from "react-router-dom";
+import { menuConfig } from "../../../configs";
 
 function createSignUp(
   logService: LogService,
@@ -16,6 +18,7 @@ function createSignUp(
   return function* (action: DispatchAction<{
     email: string;
     password: string;
+    navigate: NavigateFunction;
   }>) {
     logService.debug("signin up user");
     yield put(showLoadingAction());
@@ -36,8 +39,16 @@ function createSignUp(
         return;
       }
 
-      // TODO: Handle signup success
       yield put(signUpSuccessAction(result.data!));
+      yield put(
+        showPopupAction(
+          "SUCCESS",
+          "Daftar berhasil",
+          "Silahkan melakukan login"
+        )
+      );
+
+      action.payload.navigate(menuConfig.get("SIGNIN").path);
 
     } catch (error) {
       logService.error(error);

@@ -1,13 +1,15 @@
+import { NavigateFunction } from "react-router-dom";
 import { AUTH_ACTIONS } from "../../helpers";
 import { AuthState, DispatchAction, User, UserRole } from "../../types";
 
 export function signInAction(
   email: string,
   password: string,
+  navigate: NavigateFunction
 ) {
   return {
     type: AUTH_ACTIONS.SIGN_IN,
-    payload: { email, password },
+    payload: { email, password, navigate },
   };
 }
 
@@ -29,10 +31,11 @@ export function signInSuccessAction(
 export function signUpAction(
   email: string,
   password: string,
+  navigate: NavigateFunction
 ) {
   return {
     type: AUTH_ACTIONS.SIGN_UP,
-    payload: { email, password },
+    payload: { email, password, navigate },
   };
 }
 
@@ -50,9 +53,10 @@ export function signUpSuccessAction(
   };
 }
 
-export function signOutAction() {
+export function signOutAction(navigate: NavigateFunction) {
   return {
     type: AUTH_ACTIONS.SIGN_OUT,
+    payload: { navigate },
   };
 }
 

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { updateAppStateAction } from "../../redux";
+import { switchDarkModeAction } from "../../redux";
 import { IconButton } from "../buttons.component";
 import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
@@ -7,10 +7,15 @@ import { useRootState } from "../../hooks";
 import { Dispatch, ReactElement, SetStateAction } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useNavigate } from "react-router-dom";
+import { AvailableMenus } from "../../types";
+import { menuConfig } from "../../configs";
+import { Image } from "../image.component";
 
 declare type NavMenusProps = {
   showMobileNavbar?: boolean;
   setShowMobileNavbar?: Dispatch<SetStateAction<boolean>>;
+  logoLinkTo?: AvailableMenus;
   className?: string;
   children: ReactElement | ReactElement[];
 };
@@ -18,33 +23,35 @@ declare type NavMenusProps = {
 export function NavMenus({
   showMobileNavbar,
   setShowMobileNavbar,
-  className,
+  logoLinkTo,
+  className = "",
   children,
 }: NavMenusProps) {
   const dispath = useDispatch();
+  const navigate = useNavigate();
   const darkMode = useRootState((state) => state.appState.darkMode);
 
   return (
     <>
-      <div className={`${darkMode ? "bg-slate-700" : "bg-white"} sticky top-0 h-14 w-full p-2 flex justify-between items-center ${className}`}>
+      <div className={`z-30 sticky top-0 h-14 w-full p-2 flex justify-between items-center ${darkMode ? "bg-slate-700" : "bg-white"} ${className}`}>
         <IconButton
           icon={faBars}
           className={darkMode ? "text-white" : "text-black"}
           onClick={() => setShowMobileNavbar!(true)}
         />
-        <img alt="logo" src={require("../../assets/logo.png")} className="object-cover h-full" />
+        <Image
+          alt="logo"
+          source={require("../../assets/logo.png")}
+          onClick={() => navigate(menuConfig.get("HOME").path)}
+        />
         <IconButton
           icon={darkMode ? faSun : faMoon}
           className={darkMode ? "text-white" : "text-black"}
-          onClick={() => dispath(
-            updateAppStateAction({
-              darkMode: !darkMode,
-            })
-          )}
+          onClick={() => dispath(switchDarkModeAction(!darkMode))}
           size="lg"
         />
       </div>
-      <div className={`${showMobileNavbar ? "visible left-0" : "invisible left-[-100%]"} fixed w-full h-full flex flex-col top-0 transition-all duration-300`}>
+      <div className={`${showMobileNavbar ? "visible left-0" : "invisible left-[-100%]"} z-30 fixed w-full h-full flex flex-col top-0 transition-all duration-300`}>
         <div className="bg-teal-600 h-14 w-full p-2 flex justify-between items-center">
           <IconButton
             icon={faClose}
@@ -52,7 +59,15 @@ export function NavMenus({
             color="white"
             onClick={() => setShowMobileNavbar!(false)}
           />
-          <img alt="logo" src={require("../../assets/logo.png")} className="object-cover h-full" />
+          <Image
+            alt="logo"
+            source={require("../../assets/logo.png")}
+            onClick={() => {
+              setShowMobileNavbar!(false);
+              if (logoLinkTo)
+                navigate(menuConfig.get(logoLinkTo).path);
+            }}
+          />
         </div>
         <div className={`w-full h-full ${darkMode ? "bg-slate-700 text-white" : "bg-white text-black"} flex flex-col items-center`}>
           {children}
@@ -64,21 +79,24 @@ export function NavMenus({
 
 declare type NavMenuItemProps = {
   title: string;
-  onClick: () => void;
+  to: AvailableMenus;
   icon?: IconProp;
   className?: string;
+  onClick?: () => void;
 };
 
 export function NavMenuItem({
   title,
-  onClick,
+  to,
   icon,
   className,
+  onClick,
 }: NavMenuItemProps) {
   const darkMode = useRootState((state) => state.appState.darkMode);
 
   return (
-    <div
+    <Link
+      to={{ pathname: menuConfig.get(to).path }}
       className={`p-4 cursor-pointer ${darkMode ? "hover:bg-slate-600" : "hover:bg-slate-300"} w-full flex items-center ${className}`}
       onClick={onClick}
     >
@@ -89,6 +107,6 @@ export function NavMenuItem({
         />
       ) : null}
       {title}
-    </div>
+    </Link>
   );
 }

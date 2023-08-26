@@ -16,7 +16,7 @@ export default {
       JSON.stringify(
         this.get()
           ? { ...this.get(), ...value }
-          : value
+          : { ...value }
       )
     );
   },

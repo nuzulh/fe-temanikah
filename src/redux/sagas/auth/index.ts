@@ -3,6 +3,7 @@ import { AuthService, LogService } from "../../../services";
 import { startSignInSaga } from "./sign-in";
 import { startSignUpSaga } from "./sign-up";
 import { watchAuthStateSaga } from "./watch-auth-state";
+import { startSignOutSaga } from "./sign-out";
 
 export function* startAuthSagas(
   logService: LogService,
@@ -13,5 +14,6 @@ export function* startAuthSagas(
     watchAuthStateSaga(logService),
     startSignInSaga(logService, authService),
     startSignUpSaga(logService, authService),
+    startSignOutSaga(logService),
   ]);
 }

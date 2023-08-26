@@ -1,3 +1,5 @@
+import { Text } from "../text.component";
+
 declare type LabelProps = {
   text: string;
   size?: string;
@@ -12,8 +14,8 @@ export default function Label({
   className = "",
 }: LabelProps) {
   return (
-    <h1 className={`pb-1 text-${color} text-${size} ${className}`}>
+    <Text className={`pb-1 text-${color} text-${size} ${className}`}>
       {text}
-    </h1>
+    </Text>
   );
 }

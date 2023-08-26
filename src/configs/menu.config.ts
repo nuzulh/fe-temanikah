@@ -7,7 +7,22 @@ const menus: Menus = {
   HOME: {
     name: "Home",
     path: "/",
-    roles: ["GUEST", "USER"],
+    roles: ["ADMIN", "GUEST", "USER"],
+  },
+  THEMES: {
+    name: "Themes",
+    path: "/themes",
+    roles: ["ADMIN", "GUEST", "USER"],
+  },
+  PACKAGES: {
+    name: "Packages",
+    path: "/packages",
+    roles: ["ADMIN", "GUEST", "USER"],
+  },
+  CONTACT: {
+    name: "Contact",
+    path: "/contact",
+    roles: ["ADMIN", "GUEST", "USER"],
   },
   SIGNIN: {
     name: "Sign In",
@@ -22,7 +37,7 @@ const menus: Menus = {
   // Secured
   DASHBOARD: {
     name: "Dashboard",
-    path: `${appPath}/dashboard`,
+    path: `${appPath}/`,
     roles: ["USER"],
   },
   PROFILE: {

@@ -1,18 +1,11 @@
+import { NavigateFunction } from "react-router-dom";
 import { APP_ACTIONS } from "../../helpers";
-import { AppState, DispatchAction, PageRoute, Popup, PopupType } from "../../types";
+import { AppState, DispatchAction, Popup, PopupType } from "../../types";
 
-export function startBootinit() {
+export function startBootinit(navigate: NavigateFunction) {
   return {
     type: APP_ACTIONS.START_BOOT_INIT,
-  };
-}
-
-export function navigateToAction(
-  route: PageRoute
-): DispatchAction<PageRoute> {
-  return {
-    type: APP_ACTIONS.NAVIGATE_TO,
-    payload: route,
+    payload: { navigate },
   };
 }
 
@@ -69,6 +62,6 @@ export function updateAppStateAction(
 ): DispatchAction<Partial<AppState>> {
   return {
     type: APP_ACTIONS.MUTATION.UPDATE_APP_STATE,
-    payload: appState,
+    payload: { ...appState },
   };
 }

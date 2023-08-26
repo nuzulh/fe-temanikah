@@ -1,7 +1,6 @@
 import { ApiError, AvailableMenus, User } from "./";
 
 export declare type AppState = {
-  selectedMenu: AvailableMenus;
   darkMode: boolean;
   language: "ID" | "EN";
   isLoading: boolean;

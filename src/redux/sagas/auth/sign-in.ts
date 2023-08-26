@@ -1,4 +1,4 @@
-import { call, put, takeLeading } from "redux-saga/effects";
+import { call, put, select, takeLeading } from "redux-saga/effects";
 import { AuthService, LogService } from "../../../services";
 import { AUTH_ACTIONS } from "../../../helpers";
 import {
@@ -7,7 +7,9 @@ import {
   showPopupAction,
   signInSuccessAction,
 } from "../../actions";
-import { ApiResponse, DispatchAction, User } from "../../../types";
+import { ApiResponse, DispatchAction, RootState, User, UserRole } from "../../../types";
+import { NavigateFunction } from "react-router-dom";
+import { menuConfig } from "../../../configs";
 
 function createSignIn(
   logService: LogService,
@@ -16,6 +18,7 @@ function createSignIn(
   return function* (action: DispatchAction<{
     email: string;
     password: string;
+    navigate: NavigateFunction;
   }>) {
     logService.debug("sign in user");
     yield put(showLoadingAction());
@@ -36,8 +39,23 @@ function createSignIn(
         return;
       }
 
-      // TODO: Handle signin success
       yield put(signInSuccessAction(result.data!));
+
+      const userRole: UserRole = yield select(
+        (state: RootState) => state.authState.user?.role
+      );
+
+      action.payload.navigate(
+        menuConfig.get(
+          userRole === "USER"
+            ? "DASHBOARD"
+            : userRole === "ADMIN"
+              ? "DASHBOARD"
+              : userRole === "GUEST"
+                ? "HOME"
+                : "UNKNOWN"
+        ).path
+      );
 
     } catch (error) {
       logService.error(error);
