@@ -40,6 +40,11 @@ const menus: Menus = {
     path: `${appPath}/`,
     roles: ["USER"],
   },
+  SUBSCRIPTIONS: {
+    name: "Subscriptions",
+    path: `${appPath}/subscriptions`,
+    roles: ["USER"],
+  },
   PROFILE: {
     name: "Profile",
     path: `${appPath}/profile`,

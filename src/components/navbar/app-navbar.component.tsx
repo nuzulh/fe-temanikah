@@ -1,6 +1,6 @@
-import { Outlet, useNavigate } from "react-router-dom";
 import { Navbar } from ".";
-import { faDoorClosed, faEarth, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { Outlet, useNavigate } from "react-router-dom";
+import { faCartShopping, faDoorClosed, faHistory, faPerson } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useRootState } from "../../hooks";
 import { Button } from "../buttons.component";
@@ -23,29 +23,39 @@ export function AppNavbar() {
       >
         <Navbar.NavMenuItem
           to="DASHBOARD"
-          title="Dhasboar"
+          title="Dashboard"
           icon={faChartBar}
+          onClick={() => setShowMobileNavbar(false)}
+        />
+        <Navbar.NavMenuItem
+          to="SUBSCRIPTIONS"
+          title="Paket"
+          icon={faCartShopping}
+          onClick={() => setShowMobileNavbar(false)}
         />
         <Navbar.NavMenuItem
           to="HISTORY"
           title="Riwayat"
-          icon={faEarth}
+          icon={faHistory}
+          onClick={() => setShowMobileNavbar(false)}
         />
         <Navbar.NavMenuItem
           to="PROFILE"
           title="Profil"
           icon={faPerson}
+          onClick={() => setShowMobileNavbar(false)}
         />
-        <Button
-          outline={!darkMode}
-          className="my-4"
-          icon={faDoorClosed}
-          onClick={() => dispath(
-            signOutAction(navigate)
-          )}
-        >
-          Keluar
-        </Button>
+        <div className="w-4/5 my-4">
+          <Button
+            outline={!darkMode}
+            icon={faDoorClosed}
+            onClick={() => dispath(
+              signOutAction(navigate)
+            )}
+          >
+            Keluar
+          </Button>
+        </div>
       </Navbar.NavMenus>
       <Outlet />
     </>

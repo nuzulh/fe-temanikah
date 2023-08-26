@@ -1,9 +1,9 @@
 import { ScreenContainer, Text } from "../../components";
 
-export function DashboardPage() {
+export function HistoryPage() {
   return (
     <ScreenContainer>
-      <Text>Dashboard</Text>
+      <Text>Riwayat</Text>
     </ScreenContainer>
   );
 }

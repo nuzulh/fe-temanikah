@@ -1,9 +1,9 @@
 import { ScreenContainer, Text } from "../../components";
 
-export function DashboardPage() {
+export function SubscriptionsPage() {
   return (
     <ScreenContainer>
-      <Text>Dashboard</Text>
+      <Text>Paket langganan</Text>
     </ScreenContainer>
   );
 }

@@ -3,7 +3,7 @@ import { useRootState } from "../hooks";
 declare type TextProps = {
   className?: string;
   onClick?: () => void;
-  children: string;
+  children: string | string[];
 };
 
 export function Text({
