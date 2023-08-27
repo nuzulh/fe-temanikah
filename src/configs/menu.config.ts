@@ -39,7 +39,7 @@ const menus: Menus = {
   // Secured
   DASHBOARD: {
     name: "Dashboard",
-    path: `${appPath}/`,
+    path: appPath,
     roles: ["USER"],
   },
   SUBSCRIPTIONS: {
@@ -75,4 +75,9 @@ export default {
   get(key: AvailableMenus): Menu {
     return menus[key];
   },
+  getByPath(key: string): Menu {
+    return Object.values(menus).find(
+      (x) => x.path === key
+    ) as Menu;
+  }
 };

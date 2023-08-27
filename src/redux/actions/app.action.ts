@@ -1,11 +1,14 @@
-import { NavigateFunction } from "react-router-dom";
+import { Location, NavigateFunction } from "react-router-dom";
 import { APP_ACTIONS } from "../../helpers";
 import { AppState, DispatchAction, Popup, PopupType } from "../../types";
 
-export function startBootinit(navigate: NavigateFunction) {
+export function startBootinit(
+  navigate: NavigateFunction,
+  location: Location
+) {
   return {
     type: APP_ACTIONS.START_BOOT_INIT,
-    payload: { navigate },
+    payload: { navigate, location },
   };
 }
 

@@ -3,7 +3,7 @@ import { AuthPageGuard, PageGuard, useRootState } from "./hooks";
 import { useEffect } from "react";
 import { startBootinit } from "./redux";
 import { Loading, Navbar } from "./components";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
 import {
   ContactPage,
   DashboardPage,
@@ -23,11 +23,12 @@ import { menuConfig } from "./configs";
 export default function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const isLoading = useRootState((state) => state.appState.isLoading);
 
   useEffect(() => {
     dispatch(
-      startBootinit(navigate)
+      startBootinit(navigate, location)
     );
     // eslint-disable-next-line
   }, []);

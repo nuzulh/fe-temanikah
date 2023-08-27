@@ -3,12 +3,13 @@ import { LogService } from "../../services";
 import { APP_ACTIONS, appStorage } from "../../helpers";
 import { fetchAllSubscription, hideLoadingAction, updateAppStateAction, updateAuthStateAction } from "../actions";
 import { AppState, DispatchAction, RootState, User } from "../../types";
-import { NavigateFunction } from "react-router-dom";
+import { Location, NavigateFunction } from "react-router-dom";
 import { menuConfig } from "../../configs";
 
 function createBootInit(logService: LogService) {
   return function* (action: DispatchAction<{
     navigate: NavigateFunction;
+    location: Location;
   }>) {
     logService.debug("initialize boot");
 
@@ -42,19 +43,23 @@ function createBootInit(logService: LogService) {
         })
       );
 
+      // HANDLE NAVIGATION
+      const { navigate, location } = action.payload;
+      const currentPath = location.pathname.endsWith("/")
+        ? location.pathname.substring(0, location.pathname.length - 1)
+        : location.pathname;
+
       if (userStorage.role === "USER")
         yield put(fetchAllSubscription());
-      // HANDLE NAVIGATION
-      action.payload.navigate(
-        menuConfig.get(
-          userStorage.role === "USER"
-            ? "DASHBOARD"
-            : userStorage.role === "ADMIN"
-              ? "DASHBOARD"
-              : userStorage.role === "GUEST"
-                ? "HOME"
-                : "UNKNOWN"
-        ).path
+
+      // TODO: handle admin role stuff
+      // if (userStorage.role === "ADMIN")
+      // yield put(fetchAllSubscription());
+
+      navigate(
+        menuConfig.getByPath(currentPath)?.roles.includes(userStorage.role)
+          ? currentPath
+          : menuConfig.get("HOME").path
       );
     }
 
