@@ -12,5 +12,9 @@ export function getDefaultState(): RootState {
       // isError: false,
       // error: null,
     },
+    subscriptionState: {
+      subscriptions: null,
+      selectedSubscription: null,
+    },
   };
 }

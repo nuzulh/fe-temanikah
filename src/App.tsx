@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
-import { useRootState } from "./hooks";
+import { AuthPageGuard, PageGuard, useRootState } from "./hooks";
 import { useEffect } from "react";
 import { startBootinit } from "./redux";
 import { Loading, Navbar } from "./components";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import {
   ContactPage,
   DashboardPage,
@@ -18,6 +18,7 @@ import {
   SubscriptionsPage,
   ThemesPage,
 } from "./pages";
+import { menuConfig } from "./configs";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -34,20 +35,26 @@ export default function App() {
   return (
     isLoading ? <Loading /> : (
       <Routes>
+        {/* PUBLIC ROUTES */}
         <Route path="/" element={<Navbar.HomeNavbar />}>
           <Route index element={<HomePage />} />
           <Route path="themes" element={<ThemesPage />} />
           <Route path="packages" element={<PackagesPage />} />
           <Route path="contact" element={<ContactPage />} />
-          <Route path="signin" element={<SignInPage />} />
-          <Route path="signup" element={<SignUpPage />} />
         </Route>
-        <Route path="/app" element={<Navbar.AppNavbar />}>
+        <Route path="/auth">
+          <Route index element={<Navigate to={menuConfig.get("SIGNIN").path} />} />
+          <Route path="signin" element={<AuthPageGuard element={<SignInPage />} />} />
+          <Route path="signup" element={<AuthPageGuard element={<SignUpPage />} />} />
+        </Route>
+        {/* PRIVATE ROUTES */}
+        <Route path="/app" element={<PageGuard element={<Navbar.AppNavbar />} />}>
           <Route index element={<DashboardPage />} />
           <Route path="subscriptions" element={<SubscriptionsPage />} />
           <Route path="history" element={<HistoryPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
+        {/* ERROR ROUTES */}
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

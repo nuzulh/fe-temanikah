@@ -1,4 +1,4 @@
-import { ApiError, AvailableMenus, User } from "./";
+import { SubscriptionState, User } from "./";
 
 export declare type AppState = {
   darkMode: boolean;
@@ -18,6 +18,7 @@ export declare type AuthState = {
 export declare type RootState = {
   appState: AppState;
   authState: AuthState;
+  subscriptionState: SubscriptionState;
 };
 
 export declare type SelectStateFn = <T>(cb: (state: RootState) => T) => T;

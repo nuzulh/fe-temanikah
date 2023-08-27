@@ -15,6 +15,7 @@ export declare type AvailableMenus =
   "HISTORY" |
   // Common
   "UNKNOWN" |
+  "FORBIDDEN" |
   "BACK";
 
 export declare type Menu = {

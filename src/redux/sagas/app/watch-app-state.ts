@@ -16,7 +16,7 @@ function createWatchAppState(logService: LogService) {
       darkMode: appState.darkMode,
     });
 
-    logService.json(appState);
+    logService.table(appState);
   };
 }
 

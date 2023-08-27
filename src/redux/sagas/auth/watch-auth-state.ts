@@ -17,7 +17,7 @@ function createWatchAuthState(logService: LogService) {
         token: authState.user.token,
       });
 
-    logService.json(authState);
+    logService.table(authState);
   };
 }
 

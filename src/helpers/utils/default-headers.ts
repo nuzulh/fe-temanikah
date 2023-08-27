@@ -1,8 +1,8 @@
 import { AxiosHeaders } from "axios";
 
 export function applyDefaultHeaders(
-  headers?: any,
-  token?: string
+  token?: string | null,
+  headers?: any
 ): AxiosHeaders {
   const defaultHeaders = {
     "Content-Type": "application/json",

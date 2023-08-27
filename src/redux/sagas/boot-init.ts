@@ -1,7 +1,7 @@
 import { delay, put, select, takeLeading } from "redux-saga/effects";
 import { LogService } from "../../services";
 import { APP_ACTIONS, appStorage } from "../../helpers";
-import { hideLoadingAction, updateAppStateAction, updateAuthStateAction } from "../actions";
+import { fetchAllSubscription, hideLoadingAction, updateAppStateAction, updateAuthStateAction } from "../actions";
 import { AppState, DispatchAction, RootState, User } from "../../types";
 import { NavigateFunction } from "react-router-dom";
 import { menuConfig } from "../../configs";
@@ -42,6 +42,8 @@ function createBootInit(logService: LogService) {
         })
       );
 
+      if (userStorage.role === "USER")
+        yield put(fetchAllSubscription());
       // HANDLE NAVIGATION
       action.payload.navigate(
         menuConfig.get(

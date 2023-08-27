@@ -9,7 +9,7 @@ export function* startAuthSagas(
   logService: LogService,
   authService: AuthService,
 ) {
-  logService.debug("start auth sagas");
+  logService.debug("start auth sagas...");
   yield all([
     watchAuthStateSaga(logService),
     startSignInSaga(logService, authService),

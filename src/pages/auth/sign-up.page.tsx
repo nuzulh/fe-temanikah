@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
-import { Button, Form, ScreenContainer, Separator, Text, TextButton } from "../../../components";
+import { Button, Form, ScreenContainer, Text, TextButton } from "../../components";
 import { useDispatch } from "react-redux";
-import { signInAction } from "../../../redux";
-import { useRootState } from "../../../hooks";
+import { signUpAction } from "../../redux";
+import { useRootState } from "../../hooks";
+import { menuConfig } from "../../configs";
 import { Link, useNavigate } from "react-router-dom";
-import { menuConfig } from "../../../configs";
 
-export function SignInPage() {
+export function SignUpPage() {
   const dispath = useDispatch();
   const navigate = useNavigate();
   const {
@@ -18,11 +18,11 @@ export function SignInPage() {
   return (
     <ScreenContainer>
       <Form.Field>
-        <Text className="pb-4 font-semibold">Silahkan masuk</Text>
+        <Text className="pb-4 font-semibold">Silahkan daftar</Text>
         <Text
           className="text-sm pb-4"
         >
-          Masuk dan kustomisasi undangan online pernikahanmu, sesuai dengan apa yang kamu mau.
+          Silahkan daftar untuk mulai membuat undangan online sesukamu!
         </Text>
         <Form.Label text="Email" />
         <Form.TextInput
@@ -48,7 +48,7 @@ export function SignInPage() {
           outline={!darkMode}
           onClick={
             handleSubmit(
-              (data) => dispath(signInAction(
+              (data) => dispath(signUpAction(
                 data.email,
                 data.password,
                 navigate
@@ -56,20 +56,16 @@ export function SignInPage() {
             )
           }
         >
-          Masuk
+          Daftar
         </Button>
       </Form.Field>
-      <TextButton>
-        Lupa password?
-      </TextButton>
-      <Separator />
       <div className="flex items-center">
         <Text className="text-sm mr-2">
-          Belum punya akun?
+          Sudah punya akun?
         </Text>
-        <Link to={menuConfig.get("SIGNUP").path}>
+        <Link to={menuConfig.get("SIGNIN").path}>
           <TextButton>
-            Daftar sekarang
+            masuk disini
           </TextButton>
         </Link>
       </div>

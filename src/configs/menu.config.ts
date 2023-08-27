@@ -1,6 +1,7 @@
 import { AvailableMenus, Menu, Menus } from "../types";
 
 const appPath: string = "/app";
+const authPath: string = "/auth";
 
 const menus: Menus = {
   // Unsecured
@@ -24,14 +25,15 @@ const menus: Menus = {
     path: "/contact",
     roles: ["ADMIN", "GUEST", "USER"],
   },
+  // AUTH
   SIGNIN: {
     name: "Sign In",
-    path: "/signin",
+    path: `${authPath}/signin`,
     roles: ["GUEST"],
   },
   SIGNUP: {
     name: "Sign Up",
-    path: "/signup",
+    path: `${authPath}/signup`,
     roles: ["GUEST"],
   },
   // Secured
@@ -54,6 +56,17 @@ const menus: Menus = {
     name: "History",
     path: `${appPath}/history`,
     roles: ["USER"],
+  },
+  // ERROR
+  FORBIDDEN: {
+    name: "Forbidden access",
+    path: "/forbidden",
+    roles: ["USER", "ADMIN", "GUEST"],
+  },
+  UNKNOWN: {
+    name: "Page not found",
+    path: "/not-found",
+    roles: ["USER", "ADMIN", "GUEST"],
   },
 };
 

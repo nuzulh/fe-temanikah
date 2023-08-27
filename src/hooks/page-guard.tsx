@@ -1,16 +1,35 @@
-import React, { ReactElement } from "react";
-import { User, UserRole } from "../types";
-import { ForbiddenPage, HomePage } from "../pages";
+import { useRootState } from "./root-selector";
+import { Navigate } from "react-router-dom";
+import { menuConfig } from "../configs";
 
-// TODO: implement page guard higher order component (HOC)
-export function withPageGuard(
-  user: User | Partial<User> | null,
-  roles: UserRole[],
-  Page: ReactElement | any
-): React.ReactElement {
-  if (!user) return <HomePage />;
+declare type PageGuardProps = {
+  element: any;
+};
 
-  if (roles.includes(user.role!)) return <Page />;
+export function PageGuard({ element }: PageGuardProps) {
+  const user = useRootState((state) => state.authState.user);
 
-  return <ForbiddenPage />;
+  if (!user) return <Navigate to={menuConfig.get("HOME").path} />;
+
+  if (user.token && user.isLoggedIn) return element;
+
+  return <Navigate to={menuConfig.get("FORBIDDEN").path} />;
+}
+
+export function AuthPageGuard({ element }: PageGuardProps) {
+  const user = useRootState((state) => state.authState.user);
+
+  if (!user) return element;
+
+  return <Navigate
+    to={
+      menuConfig.get(
+        user.role === "USER"
+          ? "DASHBOARD"
+          : user.role === "ADMIN"
+            ? "DASHBOARD"
+            : "HOME")
+        .path
+    }
+  />;
 }

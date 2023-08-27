@@ -17,7 +17,8 @@ const services = createServices(
 );
 const startSagas = createRootSagas(
   services.logService,
-  services.authService
+  services.authService,
+  services.subscriptionService
 );
 sagaMiddleware.run(startSagas);
 
