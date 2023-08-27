@@ -16,7 +16,7 @@ function createWatchAppState(logService: LogService) {
       darkMode: appState.darkMode,
     });
 
-    logService.table(appState);
+    // logService.table(appState);
   };
 }
 
@@ -24,6 +24,6 @@ export function* watchAppStateSaga(logService: LogService) {
   logService.debug("start watch app state saga");
   yield takeLatest(
     APP_ACTIONS.MUTATION.UPDATE_APP_STATE,
-    createWatchAppState(logService),
+    createWatchAppState(logService)
   );
 }

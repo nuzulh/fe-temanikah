@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { startBootinit } from "./redux";
 import { Loading, Navbar } from "./components";
 import { Routes, Route, useNavigate, Navigate, useLocation } from "react-router-dom";
+import { menuConfig } from "./configs";
 import {
   ContactPage,
   DashboardPage,
@@ -18,7 +19,6 @@ import {
   SubscriptionsPage,
   ThemesPage,
 } from "./pages";
-import { menuConfig } from "./configs";
 
 export default function App() {
   const dispatch = useDispatch();

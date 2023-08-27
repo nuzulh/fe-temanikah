@@ -11,6 +11,6 @@ export function applyDefaultHeaders(
   };
   return token ? {
     ...defaultHeaders,
-    Authorization: token,
+    Authorization: `Bearer ${token}`,
   } : { ...defaultHeaders };
 }

@@ -13,7 +13,7 @@ export function ScreenContainer({
   const darkMode = useRootState((state) => state.appState.darkMode);
 
   return (
-    <div className={`h-screen w-screen p-3 ${darkMode ? "bg-slate-600" : "bg-white"} ${className}`}>
+    <div className={`h-screen w-screen p-4 ${darkMode ? "bg-slate-600" : "bg-white"} ${className}`}>
       {children}
     </div>
   );

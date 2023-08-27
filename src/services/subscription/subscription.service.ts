@@ -1,7 +1,7 @@
-import { Subscription } from "../../types";
+import { Subscription, Subscriptions } from "../../types";
 
 export interface SubscriptionService {
-  getAll(): Promise<Subscription>;
+  getAll(): Promise<Subscriptions>;
   postSubscription(data: Subscription): Promise<any>;
   putSubscription(id: number, data: Partial<Subscription>): Promise<any>;
   deleteSubscription(id: number): Promise<any>;

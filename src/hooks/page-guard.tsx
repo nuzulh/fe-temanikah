@@ -19,14 +19,15 @@ export function PageGuard({ element }: PageGuardProps) {
 export function AuthPageGuard({ element }: PageGuardProps) {
   const user = useRootState((state) => state.authState.user);
 
-  if (!user) return element;
+  if (user?.token === null && user.role === "GUEST")
+    return element;
 
   return <Navigate
     to={
       menuConfig.get(
-        user.role === "USER"
+        user?.role === "USER"
           ? "DASHBOARD"
-          : user.role === "ADMIN"
+          : user?.role === "ADMIN"
             ? "DASHBOARD"
             : "HOME")
         .path

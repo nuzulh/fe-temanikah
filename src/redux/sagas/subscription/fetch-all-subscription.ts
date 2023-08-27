@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { LogService, SubscriptionService } from "../../../services";
 import { ApiResponse, Subscriptions } from "../../../types";
-import { showPopupAction, updateSubscriptionState } from "../../actions";
+import { hideLoadingAction, showLoadingAction, showPopupAction, updateSubscriptionAction } from "../../actions";
 import { SUBSCRIPTION_ACTIONS } from "../../../helpers";
 
 function createFetchAllSubscription(
@@ -10,24 +10,33 @@ function createFetchAllSubscription(
 ) {
   return function* () {
     logService.debug("fetching all subscription");
+    yield put(showLoadingAction());
 
-    const result: ApiResponse<Subscriptions> = yield call(
-      subscriptionService.getAll
-    );
+    try {
+      const result: ApiResponse<Subscriptions> = yield call(
+        subscriptionService.getAll
+      );
 
-    if (result.error) {
-      yield put(showPopupAction(
-        "ERROR",
-        result.errorKey!,
-        result.message!
-      ));
-      return;
+      if (result.error) {
+        yield put(showPopupAction(
+          "ERROR",
+          result.errorKey!,
+          result.message!
+        ));
+        return;
+      }
+
+      yield put(updateSubscriptionAction({
+        subscriptions: result.data!,
+        selectedSubscription: result.data![0] || null,
+      }));
+
+    } catch (error) {
+      logService.error(error);
+
+    } finally {
+      yield put(hideLoadingAction());
     }
-
-    yield put(updateSubscriptionState({
-      subscriptions: result.data!,
-      selectedSubscription: result.data![0] || null,
-    }));
   };
 }
 
@@ -37,7 +46,7 @@ export function* startFetchAllSubscription(
 ) {
   logService.debug("start fetch all subscription saga");
   yield takeEvery(
-    SUBSCRIPTION_ACTIONS.FETCH_ALL,
+    SUBSCRIPTION_ACTIONS.FETCH_ALL_SUBSCRIPTION,
     createFetchAllSubscription(logService, subscriptionService)
   );
 }

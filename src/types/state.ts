@@ -1,4 +1,4 @@
-import { SubscriptionState, User } from "./";
+import { SubscriptionState, TransactionState, User } from "./";
 
 export declare type AppState = {
   darkMode: boolean;
@@ -19,6 +19,7 @@ export declare type RootState = {
   appState: AppState;
   authState: AuthState;
   subscriptionState: SubscriptionState;
+  transactionState: TransactionState;
 };
 
 export declare type SelectStateFn = <T>(cb: (state: RootState) => T) => T;

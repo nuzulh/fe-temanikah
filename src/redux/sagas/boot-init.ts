@@ -1,10 +1,16 @@
 import { delay, put, select, takeLeading } from "redux-saga/effects";
 import { LogService } from "../../services";
 import { APP_ACTIONS, appStorage } from "../../helpers";
-import { fetchAllSubscription, hideLoadingAction, updateAppStateAction, updateAuthStateAction } from "../actions";
 import { AppState, DispatchAction, RootState, User } from "../../types";
 import { Location, NavigateFunction } from "react-router-dom";
 import { menuConfig } from "../../configs";
+import {
+  fetchAllSubscriptionAction,
+  fetchAllTransactionAction,
+  hideLoadingAction,
+  updateAppStateAction,
+  updateAuthStateAction,
+} from "../actions";
 
 function createBootInit(logService: LogService) {
   return function* (action: DispatchAction<{
@@ -15,55 +21,65 @@ function createBootInit(logService: LogService) {
 
     const appStateStorage = appStorage.get<AppState>();
     const userStorage = appStorage.get<User>();
-    const rootState: RootState = yield select(
-      (state) => state
+    const appState: AppState = yield select(
+      (state: RootState) => state.appState
     );
 
     // HANDLE EMPTY STORAGE
+    yield delay(200);
     if (!appStateStorage) appStorage.set({
-      language: rootState.appState.language,
-      darkMode: rootState.appState.darkMode,
+      language: appState.language,
+      darkMode: appState.darkMode,
       role: "GUEST",
     });
 
-    // HANDLE APP STATE
-    if (appStateStorage?.language && appStateStorage.darkMode)
+    if (
+      appStateStorage?.language ||
+      appStateStorage?.darkMode ||
+      userStorage?.token ||
+      userStorage?.role
+    ) {
+      // HANDLE APP STATE
+      yield delay(200);
       yield put(updateAppStateAction({
         language: appStateStorage?.language,
         darkMode: appStateStorage?.darkMode,
       }));
 
-    // HANDLE AUTH STATE
-    if (userStorage?.token && userStorage.role) {
+      // HANDLE AUTH STATE
+      yield delay(200);
       yield put(
         updateAuthStateAction({
-          token: userStorage.token,
-          role: userStorage.role,
-          isLoggedIn: true,
+          token: userStorage?.token || null,
+          role: userStorage?.role || "GUEST",
+          isLoggedIn: userStorage?.token ? true : false,
         })
-      );
-
-      // HANDLE NAVIGATION
-      const { navigate, location } = action.payload;
-      const currentPath = location.pathname.endsWith("/")
-        ? location.pathname.substring(0, location.pathname.length - 1)
-        : location.pathname;
-
-      if (userStorage.role === "USER")
-        yield put(fetchAllSubscription());
-
-      // TODO: handle admin role stuff
-      // if (userStorage.role === "ADMIN")
-      // yield put(fetchAllSubscription());
-
-      navigate(
-        menuConfig.getByPath(currentPath)?.roles.includes(userStorage.role)
-          ? currentPath
-          : menuConfig.get("HOME").path
       );
     }
 
-    yield delay(1500);
+    // HANDLE PUBLIC FETCH
+    yield put(fetchAllSubscriptionAction());
+
+    // HANDLE PRIVATE FETCH
+    if (userStorage && userStorage.role !== "GUEST") {
+      yield put(fetchAllTransactionAction());
+    }
+
+    // HANDLE NAVIGATION
+    yield delay(200);
+    const { navigate, location } = action.payload;
+    const currentPath = location.pathname.endsWith("/")
+      ? location.pathname.substring(0, location.pathname.length - 1)
+      : location.pathname;
+
+    navigate(
+      menuConfig.getByPath(currentPath)?.roles.includes(
+        userStorage?.role || "GUEST"
+      )
+        ? currentPath
+        : menuConfig.get("HOME").path
+    );
+
     yield put(hideLoadingAction());
   };
 }

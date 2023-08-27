@@ -1,13 +1,13 @@
 import { SUBSCRIPTION_ACTIONS } from "../../helpers";
 import { DispatchAction, Subscription, SubscriptionState } from "../../types";
 
-export function fetchAllSubscription() {
+export function fetchAllSubscriptionAction() {
   return {
-    type: SUBSCRIPTION_ACTIONS.FETCH_ALL,
+    type: SUBSCRIPTION_ACTIONS.FETCH_ALL_SUBSCRIPTION,
   };
 }
 
-export function updateSubscriptionState(
+export function updateSubscriptionAction(
   subscriptionState: SubscriptionState
 ): DispatchAction<Partial<SubscriptionState>> {
   return {
@@ -16,7 +16,7 @@ export function updateSubscriptionState(
   };
 }
 
-export function selectSubscription(
+export function selectSubscriptionAction(
   subscription: Subscription
 ): DispatchAction<Partial<SubscriptionState>> {
   return {
@@ -24,5 +24,11 @@ export function selectSubscription(
     payload: {
       selectedSubscription: subscription,
     },
+  };
+}
+
+export function resetSubscriptionAction() {
+  return {
+    type: SUBSCRIPTION_ACTIONS.MUTATION.RESET_SUBSCRIPTION_STATE,
   };
 }

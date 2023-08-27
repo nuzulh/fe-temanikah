@@ -15,7 +15,7 @@ export function Text({
 
   return (
     <p
-      className={`${darkMode ? "text-white" : "text-black"} ${className}`}
+      className={`${className} ${darkMode ? "text-white" : "text-black"}`}
       onClick={onClick}
     >
       {children}

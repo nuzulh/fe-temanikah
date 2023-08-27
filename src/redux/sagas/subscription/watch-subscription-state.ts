@@ -3,7 +3,7 @@ import { LogService } from "../../../services";
 import { RootState, SubscriptionState } from "../../../types";
 import { SUBSCRIPTION_ACTIONS } from "../../../helpers";
 
-function watchSubscriptionState(logService: LogService) {
+function createWatchSubscription(logService: LogService) {
   return function* () {
     logService.debug("--- subscription state has been updated");
 
@@ -19,6 +19,6 @@ export function* watchSubscriptionSaga(logService: LogService) {
   logService.debug("start watch subscription saga");
   yield takeLatest(
     SUBSCRIPTION_ACTIONS.MUTATION.UPDATE_SUBSCRIPTION_STATE,
-    watchSubscriptionState(logService)
+    createWatchSubscription(logService)
   );
 }

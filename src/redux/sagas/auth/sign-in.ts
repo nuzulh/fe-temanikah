@@ -2,6 +2,8 @@ import { call, put, select, takeLeading } from "redux-saga/effects";
 import { AuthService, LogService } from "../../../services";
 import { AUTH_ACTIONS } from "../../../helpers";
 import {
+  fetchAllSubscriptionAction,
+  fetchAllTransactionAction,
   hideLoadingAction,
   showLoadingAction,
   showPopupAction,
@@ -43,6 +45,12 @@ function createSignIn(
 
       const userRole: UserRole = yield select(
         (state: RootState) => state.authState.user?.role
+      );
+
+      yield put(fetchAllSubscriptionAction());
+
+      if (userRole !== "GUEST") yield put(
+        fetchAllTransactionAction()
       );
 
       action.payload.navigate(
